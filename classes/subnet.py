@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """Class to handle subnets with AWS SDK for Python - Boto3."""
 
+from logging import getLogger
 from botocore.exceptions import ClientError, UnauthorizedSSOTokenError
 
 from classes.ip_addresses import IpAddress
 from classes.python_arrays import GetItemFrom
 from classes.python_sdk import BotoType, Paginator
 
-from logging import getLogger
 MODULE_LOGGER = getLogger(__name__)
 
 
-class AwsSubnet:
+class AwsSubnet:  # pylint: disable=R0903
     """Handle AWS a subnet boto3 ec2 resource."""
 
     def __init__(self, session: object, subnet_id) -> None:
@@ -27,7 +27,7 @@ class AwsSubnet:
         """Create an array with all IPs in the CIDR and display usage."""
 
         # Get the list of IP addresses in a given CIDR block
-        all_ips_in_cidr_block = IpAddress().get_ips_in_cidr(self.cidr)
+        all_ips_in_cidr_block = IpAddress().get_ips_v4_in_cidr(self.cidr)
         ips_in_block = len(all_ips_in_cidr_block)
 
         # Get the list of used ENIs in a given Subnet ID
@@ -72,7 +72,7 @@ class AwsSubnet:
             }
 
 
-class AwsSubnets:
+class AwsSubnets:  # pylint: disable=R0903
     """Handle AWS subnets boto3 ec2 client."""
     _class_logger = MODULE_LOGGER.getChild(__qualname__)
 
@@ -84,13 +84,18 @@ class AwsSubnets:
     def describe(self, subnet_ids: list) -> dict:
         """Get details of a given list of Subnet IDs."""
         try:
-            subnets = self.ec2.describe_subnets(
+            response = self.ec2.describe_subnets(
                 SubnetIds=subnet_ids,
             )
-            return subnets['Subnets']
+            subnets = response['Subnets']
 
         except ClientError as e:
             self._instance_logger.error(e)
 
         except UnauthorizedSSOTokenError as e:
             self._instance_logger.error(e)
+
+        else:
+            subnets = None
+
+        return subnets

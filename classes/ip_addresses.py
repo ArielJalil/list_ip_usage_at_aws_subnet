@@ -12,8 +12,11 @@ class IpAddress:
 
     def __init__(self):
         """Class Constructor."""
-        pass
 
-    def get_ips_in_cidr(self, cidr: str) -> list:
+    def get_ips_v4_in_cidr(self, cidr: str) -> list:
         """Get the list of IP addresses in a given CIDR."""
         return [str(ip) for ip in ipaddress.IPv4Network(cidr)]
+
+    def get_ips_v6_in_cidr(self, cidr: str) -> list:
+        """Get the list of IP addresses in a given CIDR."""
+        return [str(ip) for ip in ipaddress.IPv6Network(cidr)]

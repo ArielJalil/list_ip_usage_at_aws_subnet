@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 """Display list of IP addresses usage in a given subnet."""
 
-# https://github.com/jagadishrajr/findfreeipinawssubnet
-
+from logging import getLogger
 import click
 
 from classes.common import Color
 from classes.python_arrays import ListToColumns, GetItemFrom
 from classes.python_sdk import AwsSession
 from classes.subnet import AwsSubnet
-
-from logging import getLogger
 
 DEFAULT_CLI_PROFILE = 'default'
 DEFAULT_REGION = 'ap-southeast-2'
@@ -71,7 +68,7 @@ def subnet_query(subnet_id: str, profile: str, region: str) -> None:
         ip_count += 1
 
     # Display the list of IPs in the given subnet
-    col_width = len(ips_to_display[0]) - 3  # Removing 3 characters from the items added by color setting
+    col_width = len(ips_to_display[0]) - 3  # Removing 3 char from the items added by color setting
     ListToColumns(ips_to_display, col_width).display()
 
     # Summary
@@ -89,4 +86,4 @@ def subnet_query(subnet_id: str, profile: str, region: str) -> None:
 
 
 if __name__ == '__main__':
-    subnet_query()
+    subnet_query()  # pylint: disable=E1120

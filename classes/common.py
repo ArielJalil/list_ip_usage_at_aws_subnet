@@ -6,7 +6,7 @@ from logging import getLogger
 LOGGER = getLogger(__name__)
 
 
-class Color:
+class Color:  # pylint: disable=R0903,R0902
     """Choose color to print messages."""
 
     def __init__(self) -> None:
