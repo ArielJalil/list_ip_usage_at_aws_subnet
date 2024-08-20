@@ -10,6 +10,7 @@ from classes.python_sdk import BotoType, Paginator
 from logging import getLogger
 MODULE_LOGGER = getLogger(__name__)
 
+
 class AwsSubnet:
     """Handle AWS a subnet boto3 ec2 resource."""
 
