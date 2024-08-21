@@ -18,3 +18,8 @@ Options:
                         southeast-2]
   --help                Show this message and exit.
 ```
+
+## Author and Lincense
+
+This script has been written by [Ariel Jall](https://github.com/ArielJalil) and it is released under
+ [GNU 3.0](https://www.gnu.org/licenses/gpl-3.0.en.html).
